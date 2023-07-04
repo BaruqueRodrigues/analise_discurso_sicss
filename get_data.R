@@ -4,7 +4,9 @@ library(tidyverse)
 
 discursos <- speechbr::speech_data(keyword = "",
                       start_date = "2023-01-01",
-                      end_date = "2023-01-31")
+                      end_date = "2023-12-31")
+
+write_rds(discursos, "data/discursos.rds")
 
 dep_2022 <- electionsBR::candidate_fed(2022) %>% 
   filter(DS_CARGO == "DEPUTADO FEDERAL",
@@ -24,4 +26,5 @@ dep_2022 <- electionsBR::candidate_fed(2022) %>%
 dados <- left_join(discursos, dep_2022,
             by = c("orador" = "nm_candidato"))
 
-dados
+dados %>% 
+  write_rds("data/dataset_final.rds")
